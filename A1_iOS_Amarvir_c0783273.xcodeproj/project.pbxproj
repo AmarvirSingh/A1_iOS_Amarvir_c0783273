@@ -15,6 +15,7 @@
 		EEAD7FAD25BF534600197C5D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEAD7FAB25BF534600197C5D /* LaunchScreen.storyboard */; };
 		EEAD7FB825BF534600197C5D /* A1_iOS_Amarvir_c0783273Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD7FB725BF534600197C5D /* A1_iOS_Amarvir_c0783273Tests.swift */; };
 		EEAD7FC325BF534600197C5D /* A1_iOS_Amarvir_c0783273UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD7FC225BF534600197C5D /* A1_iOS_Amarvir_c0783273UITests.swift */; };
+		EEAD7FD125BF662800197C5D /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD7FD025BF662800197C5D /* Place.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		EEAD7FBE25BF534600197C5D /* A1_iOS_Amarvir_c0783273UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A1_iOS_Amarvir_c0783273UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEAD7FC225BF534600197C5D /* A1_iOS_Amarvir_c0783273UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A1_iOS_Amarvir_c0783273UITests.swift; sourceTree = "<group>"; };
 		EEAD7FC425BF534600197C5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEAD7FD025BF662800197C5D /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				EEAD7FA025BF533A00197C5D /* AppDelegate.swift */,
 				EEAD7FA225BF533A00197C5D /* SceneDelegate.swift */,
 				EEAD7FA425BF533A00197C5D /* ViewController.swift */,
+				EEAD7FD025BF662800197C5D /* Place.swift */,
 				EEAD7FA625BF533A00197C5D /* Main.storyboard */,
 				EEAD7FA925BF534600197C5D /* Assets.xcassets */,
 				EEAD7FAB25BF534600197C5D /* LaunchScreen.storyboard */,
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEAD7FA525BF533A00197C5D /* ViewController.swift in Sources */,
+				EEAD7FD125BF662800197C5D /* Place.swift in Sources */,
 				EEAD7FA125BF533A00197C5D /* AppDelegate.swift in Sources */,
 				EEAD7FA325BF533A00197C5D /* SceneDelegate.swift in Sources */,
 			);
