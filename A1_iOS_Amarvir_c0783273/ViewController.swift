@@ -61,9 +61,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         map.addGestureRecognizer(lp)
     }
     
+    
+    // added action for added button
     @IBAction func findRoute(_ sender: UIButton) {
         
         map.removeOverlays(map.overlays)
+        
+         // variable location1, locationb2, locaton3 are created out side the class and valkue assingned  to them in if else statement of
+        // objc function of long press check from there
         findRouteFunction(source: location1, destination: location2)
         findRouteFunction(source: location2, destination: location3)
         findRouteFunction(source: location3, destination: location1)
@@ -71,9 +76,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    // this is the function which is called when ever user click on the button
+    
     
     func findRouteFunction(source:CLLocationCoordinate2D, destination: CLLocationCoordinate2D){
+
         
+        // after this all the work done accoring to sirs video
         
         let sourceLocation = MKPlacemark(coordinate: source)
             let destinationLocation = MKPlacemark(coordinate: destination)
@@ -109,7 +118,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         gesture.numberOfTapsRequired = 2
         let anno = MKPointAnnotation()
          c += 1
-        //print(c)
+       
         if c == 1{
             
             anno.coordinate = coordinate
@@ -119,7 +128,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             anno.title = ("A")
             map.addAnnotation(anno)
             
-            //destination.append(anno.coordinate)  // adding coordinates for destination
+            
             location1 = coordinate
             routeBtn.isHidden = true
         }else if c == 2{
@@ -129,12 +138,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             map.addAnnotation(anno)
             routeBtn.isHidden = true
             location2 = coordinate
-           // destination.append(coordinate)
+           
         }else if c == 3 {
             anno.title = "C"
             anno.coordinate = coordinate
             places.append(Place(title:anno.title, coordinate:anno.coordinate))
-            //print(places[2].title)
+            
             map.addAnnotation(anno)
             addPolygon()
             
@@ -142,21 +151,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             routeBtn.isHidden = false
             location3 = coordinate
             
-           // destination.append(coordinate)
-            //print (destination.count)
+           
         }else if c == 4 {
             map.removeAnnotations(map.annotations) // remove all annotations
             map.removeOverlays(map.overlays) // remove all overlays
             places.removeAll() // empty the places array
             c = 1 // setting c to zero
             
-           // destination.removeAll()
+          
             // setting marker to A on fouyrth tap
             anno.title = "A"
             anno.coordinate = coordinate
             places.append(Place(title:anno.title, coordinate:anno.coordinate))
             map.addAnnotation(anno)
-            //destination.append(coordinate)
+            
             routeBtn.isHidden = true
             location1 = coordinate
             
@@ -165,14 +173,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    func removeAnnotation (){
+    
+    func removeSinglePin(){
         for anno in map.annotations{
-            if anno.title != "You Are here"{
+            if anno.title == "You Are Here"{
                 map.removeAnnotation(anno)
             }
         }
     }
-    
     // added polygon to the markers
     func addPolygon(){
         let coordinates = places.map{
@@ -189,7 +197,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         if c > 3{
-        removeAnnotation()
+        removeSinglePin()
         }
         
         let latitude = location.coordinate.latitude
@@ -204,8 +212,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                          long: CLLocationDegrees,
                          title:String){
         
-        let latDelta:CLLocationDegrees = 0.5
-        let longDelta:CLLocationDegrees = 0.5
+        let latDelta:CLLocationDegrees = 0.1
+        let longDelta:CLLocationDegrees = 0.1
         
         let zoom = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
         
@@ -229,6 +237,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 }
 
 extension ViewController:MKMapViewDelegate{
+    
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print(view.annotation?.subtitle)
+        
+    }
+    
+    // also add lines from 255 to 259
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolygon{
             let rend = MKPolygonRenderer(overlay: overlay)
@@ -236,7 +252,7 @@ extension ViewController:MKMapViewDelegate{
             rend.fillColor = UIColor.red.withAlphaComponent(0.5)
             rend.lineWidth = 2
             return rend
-        } else if overlay is MKPolyline{
+        } else if overlay is MKPolyline{ // to show route you should add poly line rendere  
             let rend = MKPolylineRenderer(overlay: overlay)
             rend.strokeColor = UIColor.red
             rend.lineWidth = 2
@@ -251,6 +267,7 @@ extension ViewController:MKMapViewDelegate{
         if annotation is MKUserLocation{
             return nil
         }
+        
        let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
         marker.tintColor = UIColor.green
         marker.canShowCallout = true
@@ -258,6 +275,7 @@ extension ViewController:MKMapViewDelegate{
         return marker
     }
     
+    // just oeee
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
        
         let alert = UIAlertController(title: "Distance To Your Location", message: String(format: "%.2f", distance/1000), preferredStyle: .alert)
