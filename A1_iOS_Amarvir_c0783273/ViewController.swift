@@ -16,14 +16,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var c = 0
     
-    // variable for distance
-    var loc1: CLLocationCoordinate2D!
-    var distance: Double = 0.0
-    var distance1: Double = 0.0
-    var distance2: Double = 0.0
-    var userLocationLatitude:CLLocation!
-    var userLocationLongitude:Double!
+    var boolA = false
+    var boolB = false
+    var boolC = false
     
+    var userLocation:CLLocation!
+    
+    var a,b,d : CLLocation!
+    // variable for fistance masuring in km
+    
+    var distance1:Double!
+    var distance2:Double!
+    var distance3:Double!
     
     // variable for showinmg routes
     
@@ -66,7 +70,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func findRoute(_ sender: UIButton) {
         
         map.removeOverlays(map.overlays)
-        
          // variable location1, locationb2, locaton3 are created out side the class and valkue assingned  to them in if else statement of
         // objc function of long press check from there
         findRouteFunction(source: location1, destination: location2)
@@ -84,7 +87,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // after this all the work done accoring to sirs video
         
-        let sourceLocation = MKPlacemark(coordinate: source)
+            let sourceLocation = MKPlacemark(coordinate: source)
             let destinationLocation = MKPlacemark(coordinate: destination)
             
             let directionRequest = MKDirections.Request()
@@ -122,9 +125,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         if c == 1{
             
             anno.coordinate = coordinate
-            let loc = CLLocation(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+            a = CLLocation(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
             places.append(Place(title:anno.title, coordinate:anno.coordinate))
-            distance = loc.distance(from: userLocationLatitude)
+
             anno.title = ("A")
             map.addAnnotation(anno)
             
@@ -135,6 +138,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             anno.title = "B"
             anno.coordinate = coordinate
             places.append(Place(title:anno.title, coordinate:anno.coordinate))
+            
+            b = CLLocation(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
             map.addAnnotation(anno)
             routeBtn.isHidden = true
             location2 = coordinate
@@ -143,6 +148,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             anno.title = "C"
             anno.coordinate = coordinate
             places.append(Place(title:anno.title, coordinate:anno.coordinate))
+            
+            d = CLLocation(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
             
             map.addAnnotation(anno)
             addPolygon()
@@ -196,6 +203,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
+        
         if c > 3{
         removeSinglePin()
         }
@@ -203,7 +211,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
         
-        userLocationLatitude = CLLocation(latitude: latitude, longitude: longitude)
+        userLocation = CLLocation(latitude: latitude, longitude: longitude)
         
         displayLocation(lat: latitude, long: longitude, title: "You Are here")
     }
@@ -241,6 +249,25 @@ extension ViewController:MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print(view.annotation?.subtitle)
+        if view.annotation?.title == "A"{
+            boolA = true
+            boolB = false
+            boolC = false
+            
+            distance1 = a.distance(from: userLocation)
+        }
+        if view.annotation?.title == "B"{
+                   boolA = false
+                   boolB = true
+                   boolC = false
+            distance2 = b.distance(from: userLocation)
+               }
+        if view.annotation?.title == "C"{
+                   boolA = false
+                   boolB = false
+                   boolC = true
+            distance3 = d.distance(from: userLocation)
+               }
         
     }
     
@@ -252,7 +279,7 @@ extension ViewController:MKMapViewDelegate{
             rend.fillColor = UIColor.red.withAlphaComponent(0.5)
             rend.lineWidth = 2
             return rend
-        } else if overlay is MKPolyline{ // to show route you should add poly line rendere  
+        } else if overlay is MKPolyline{ // to show route you should add poly line rendere
             let rend = MKPolylineRenderer(overlay: overlay)
             rend.strokeColor = UIColor.red
             rend.lineWidth = 2
@@ -271,20 +298,27 @@ extension ViewController:MKMapViewDelegate{
        let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
         marker.tintColor = UIColor.green
         marker.canShowCallout = true
-        marker.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        marker.detailCalloutAccessoryView = UIButton(type: .detailDisclosure)
         return marker
     }
     
     // just oeee
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-       
-        let alert = UIAlertController(title: "Distance To Your Location", message: String(format: "%.2f", distance/1000), preferredStyle: .alert)
+        if boolA == true {
+            let alert = UIAlertController(title: "Distance To Your Location", message: String(format: "%.2f", distance1 ," KM"), preferredStyle: .alert)
         let cancelBtn = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(cancelBtn)
         present(alert, animated: true , completion: nil)
     }
+        else if boolB == true {
+            let alert = UIAlertController(title: "Distance To Your Location", message: String(format: "%.2f", distance1 ," KM"), preferredStyle: .alert)
+            let cancelBtn = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(cancelBtn)
+            present(alert, animated: true , completion: nil)
+        }
    
     
-    
+    }
 }
 
