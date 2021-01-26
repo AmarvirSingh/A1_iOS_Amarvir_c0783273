@@ -15,21 +15,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nEg-0K-JJZ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nEg-0K-JJZ">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0I-i1-9US">
+                                <rect key="frame" x="344" y="792" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="O9n-6H-hhQ"/>
+                                    <constraint firstAttribute="height" constant="50" id="QrY-OC-ToF"/>
+                                </constraints>
+                                <state key="normal" image="location.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="findRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KyW-7x-cag"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="nEg-0K-JJZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FsO-Fh-XKO"/>
                             <constraint firstItem="nEg-0K-JJZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Hbf-eF-vLP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nEg-0K-JJZ" secondAttribute="trailing" id="X12-hQ-joM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s0I-i1-9US" secondAttribute="trailing" constant="20" id="d22-uC-h84"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="s0I-i1-9US" secondAttribute="bottom" constant="20" id="eac-Nd-RCE"/>
                             <constraint firstAttribute="bottomMargin" secondItem="nEg-0K-JJZ" secondAttribute="bottom" id="i3a-ut-GIq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="map" destination="nEg-0K-JJZ" id="GRT-fq-WvB"/>
+                        <outlet property="routeBtn" destination="s0I-i1-9US" id="LVG-Xl-9tJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -37,4 +51,7 @@
             <point key="canvasLocation" x="132" y="139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="location.fill" catalog="system" width="64" height="56"/>
+    </resources>
 </document>
